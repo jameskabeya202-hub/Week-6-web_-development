@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SpendWise helps you track a monthly budget and manage expenses.">
+  <title>SpendWise — Budget Snapshot</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="SpendWise home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>spend<span class="brand-accent">wise</span></span>
+      </a>
+      <span class="week-label">
+        <span class="status-dot"></span>
+        YOUR MONEY, IN FOCUS
+      </span>
+    </header>
+
+    <main id="home">
+      <section class="intro">
+        <div class="eyebrow">BUDGET SNAPSHOT <span aria-hidden="true">✳</span></div>
+        <h1>Make room for<br><span>what matters.</span></h1>
+        <p>
+          Set your monthly budget and record expenses. SpendWise will show you
+          what’s left to work with.
+        </p>
+      </section>
+
+      <section class="dashboard" aria-label="Budget dashboard">
+        <div class="form-panel" id="budget-section">
+          <div class="panel-heading">
+            <div>
+              <span class="section-kicker">YOUR NUMBERS</span>
+              <h2>Set your monthly plan</h2>
+            </div>
+            <span class="month-badge" id="month-label">MONTHLY</span>
+          </div>
+
+          <form id="budget-form" novalidate>
+            <label for="budget">
+              Monthly budget
+              <span class="field-hint">How much can you spend?</span>
+            </label>
+            <div class="money-input">
+              <span aria-hidden="true">KSh</span>
+              <input
+                id="budget"
+                name="budget"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="e.g. 50,000"
+                inputmode="decimal"
+                required
+              >
+            </div>
+
+            <p
+              class="form-error"
+              id="budget-error"
+              role="alert"
+              aria-live="polite"
+            ></p>
+
+            <div class="actions">
+              <button class="button button-primary" type="submit">
+                Save monthly budget <span aria-hidden="true">↗</span>
+              </button>
+              <button
+                class="button button-secondary"
+                id="prompt-entry"
+                type="button"
+              >
+                Use quick prompts
+              </button>
+            </div>
+          </form>
+
+          <p class="privacy-note">
+            <span aria-hidden="true">◉</span>
+            Your budget and expenses are saved in this browser.
+          </p>
+        </div>
+
+        <aside
+          class="result-panel"
+          aria-live="polite"
+          aria-label="Budget result"
+        >
+          <div class="result-top">
+            <span class="result-icon" aria-hidden="true">↗</span>
+            <span id="result-status">READY WHEN YOU ARE</span>
+          </div>
+
+          <div class="result-copy">
+            <span class="result-label">REMAINING BALANCE</span>
+            <div class="result-value" id="balance-value">KSh 0</div>
+            <p id="result-message">
+              Set a budget and add expenses to see your available balance.
+            </p>
+          </div>
+
+          <div class="result-divider"></div>
+
+          <div class="formula">
+            <span>THE MATH</span>
+            <strong>Budget <b>−</b> Expenses <b>=</b> Balance</strong>
+          </div>
+
+          <div class="result-decoration" aria-hidden="true">✳</div>
+        </aside>
+      </section>
+
+      <section class="spending-summary" aria-label="Spending summary">
+        <article class="summary-card">
+          <span class="section-kicker">MONTHLY BUDGET</span>
+          <strong id="budget-total">KSh 0</strong>
+        </article>
+
+        <article class="summary-card">
+          <span class="section-kicker">TOTAL SPENT</span>
+          <strong id="spent-total">KSh 0</strong>
+        </article>
+
+        <article class="summary-card">
+          <span class="section-kicker">BUDGET USED</span>
+          <strong id="budget-percent">0%</strong>
+        </article>
+      </section>
+
+      <section
+        class="expense-section"
+        id="transactions"
+        aria-labelledby="expense-heading"
+      >
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">KEEP YOUR PLAN CURRENT</span>
+            <h2 id="expense-heading">Add an expense</h2>
+          </div>
+        </div>
+
+        <form id="expense-form" novalidate>
+          <div class="expense-fields">
+            <label for="description">
+              Description
+              <input
+                id="description"
+                name="description"
+                type="text"
+                maxlength="60"
+                placeholder="e.g. Groceries"
+                required
+              >
+            </label>
+
+            <label for="amount">
+              Amount (KSh)
+              <input
+                id="amount"
+                name="amount"
+                type="number"
+                min="0.01"
+                step="0.01"
+                placeholder="e.g. 2500"
+                inputmode="decimal"
+                required
+              >
+            </label>
+
+            <label for="category">
+              Category
+              <select id="category" name="category" required>
+                <option value="" selected disabled>Choose a category</option>
+                <option>Food &amp; dining</option>
+                <option>Transport</option>
+                <option>Shopping</option>
+                <option>Bills &amp; utilities</option>
+                <option>Health</option>
+                <option>Entertainment</option>
+                <option>Other</option>
+              </select>
+            </label>
+
+            <label for="date">
+              Date
+              <input
+                id="date"
+                name="date"
+                type="date"
+                required
+              >
+            </label>
+          </div>
+
+          <p
+            class="form-error"
+            id="expense-error"
+            role="alert"
+            aria-live="polite"
+          ></p>
+
+          <button class="button button-primary" type="submit">
+            Add expense <span aria-hidden="true">↗</span>
+          </button>
+        </form>
+      </section>
+
+      <section
+        class="expense-section transaction-section"
+        aria-labelledby="transactions-heading"
+      >
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">YOUR ACTIVITY</span>
+            <h2 id="transactions-heading">Expense records</h2>
+          </div>
+          <span id="record-count" class="record-count">0 records</span>
+        </div>
+
+        <p id="empty-state" class="empty-state">
+          No expenses yet. Add your first expense above.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">CATEGORY</th>
+                <th scope="col">DATE</th>
+                <th scope="col">AMOUNT</th>
+                <th scope="col">
+                  <span class="visually-hidden">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="expense-list"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section
+        class="expense-section category-section"
+        aria-labelledby="category-heading"
+      >
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">WHERE IT GOES</span>
+            <h2 id="category-heading">Spending by category</h2>
+          </div>
+        </div>
+
+        <p id="category-empty" class="empty-state">
+          Your category totals will appear after you add expenses.
+        </p>
+
+        <ul id="category-list" aria-label="Expense totals by category"></ul>
+      </section>
+
+      <section class="tip">
+        <span class="tip-icon" aria-hidden="true">✦</span>
+        <p>
+          <strong>A small habit, a clearer picture.</strong>
+          Check in with your spending regularly to keep your plans on track.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <span>SPENDWISE</span>
+      <span>BUILDING BETTER MONEY HABITS, ONE STEP AT A TIME</span>
+    </footer>
+  </div>
+</body>
+</html>
